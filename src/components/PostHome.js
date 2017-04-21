@@ -15,10 +15,32 @@ class PostHome extends Component {
             Add a Post
           </Link>
         </div>
-        <div>List of blog posts.</div>
+        <h3>Posts</h3>
+        <ul className='list-group'>
+          {
+            this.props.posts.map(post =>
+              <li className='list-group-item' key={ post.id }>
+                <Link to={ `posts/${post.id}` }>
+                  <span className="pull-xs-right">
+                    { post.categories }
+                  </span>
+                  <stong>
+                    { post.title }
+                  </stong>
+                </Link>
+              </li>
+            )
+          }
+        </ul>
       </div>
     );
   }
 }
 
-export default connect(null, { fetchPosts })(PostHome);
+function mapStateToProps(state) {
+  return {
+    posts: state.posts.all
+  }
+}
+
+export default connect(mapStateToProps, { fetchPosts })(PostHome);
